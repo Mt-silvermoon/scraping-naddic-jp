@@ -10,11 +10,14 @@ ARCHIVE_CACHE = './naddic_jp_news_cache.pkl'
 FREQUENCY = 300
 
 def get_article_list(url):
-	_res = requests.get(url)
-	_res.raise_for_status()
-	_soup = bs4.BeautifulSoup(_res.text, "html.parser")
-	_news_area = _soup.select('.sub_news_list_ul')[0]
-	return _news_area.select('a')
+	try:
+		_res = requests.get(url)
+		_res.raise_for_status()
+		_soup = bs4.BeautifulSoup(_res.text, "html.parser")
+		_news_area = _soup.select('.sub_news_list_ul')[0]
+		return _news_area.select('a')
+	except:
+		return []
 
 def get_article(soup):
 	if soup.find('span'):
